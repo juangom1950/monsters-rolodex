@@ -8,7 +8,8 @@ class App extends Component {
     super();
 
     this.state = {
-      monsters: []
+      monsters: [],
+      searchField: ""
     };
   }
 
@@ -23,6 +24,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <input
+          type="search"
+          placeholder="Search Monsters"
+          //This setState is not going to happen inmediatly. It is asynchronous
+          //We can use a callback to run the state after setState has finished
+          onChange={e =>
+            //Here we have the field value stored in our state
+            this.setState({ searchField: e.target.value }, () =>
+              console.log(this.state.searchField)
+            )
+          }
+        />
         {/*Any parameter that we pass through here is going to be to the props */}
         <CardList monsters={this.state.monsters} />
       </div>
