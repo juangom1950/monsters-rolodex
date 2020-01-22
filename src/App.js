@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { CardList } from "./components/card-list/card-list.component";
 import "./App.css";
 
 // With class components we have access to "state"
@@ -22,10 +23,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.monsters.map(monster => (
-          // react needs this key to know which datat has changed
-          <h1 key={monster.id}> {monster.name}</h1>
-        ))}
+        {/*Any parameter that we pass through here is going to be to the props */}
+        <CardList monsters={this.state.monsters} />
       </div>
     );
   }
