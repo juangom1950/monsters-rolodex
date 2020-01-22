@@ -22,6 +22,13 @@ class App extends Component {
 
   //Everytime that we change the state, the component will be re-render to reflect that changein the DOM
   render() {
+    //I need to get the things from the state like this
+    const { monsters, searchField } = this.state;
+
+    const filteredMonsters = monsters.filter(monster =>
+      monster.name.toLowerCase().includes(searchField.toLocaleLowerCase())
+    );
+
     return (
       <div className="App">
         <input
@@ -31,13 +38,14 @@ class App extends Component {
           //We can use a callback to run the state after setState has finished
           onChange={e =>
             //Here we have the field value stored in our state
+            //This causes the component to re-render
             this.setState({ searchField: e.target.value }, () =>
               console.log(this.state.searchField)
             )
           }
         />
         {/*Any parameter that we pass through here is going to be to the props */}
-        <CardList monsters={this.state.monsters} />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
