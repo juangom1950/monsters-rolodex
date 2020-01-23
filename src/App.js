@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { CardList } from "./components/card-list/card-list.component";
+import { SearchBox } from "./components/search-box/search-box.component";
 import "./App.css";
 
 // With class components we have access to "state"
@@ -11,6 +12,10 @@ class App extends Component {
       monsters: [],
       searchField: ""
     };
+
+    //  bind is a method on any function that returns a new function where the
+    // context of this is set to whatever we passed to it
+    //this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -19,6 +24,13 @@ class App extends Component {
       .then(response => response.json())
       .then(users => this.setState({ monsters: users }));
   }
+
+  //Arrow function bind "this" context to the place where they were defined in the 1st place.
+  //Which is our App component in this case
+  //A good rule of thumb is this: Use arrow functions on any class methods you define and aren't part of React (i.e. render(), componentDidMount()).
+  handleChange = e => {
+    this.setState({ searchField: e.target.value });
+  };
 
   //Everytime that we change the state, the component will be re-render to reflect that changein the DOM
   render() {
@@ -31,18 +43,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
-          type="search"
-          placeholder="Search Monsters"
-          //This setState is not going to happen inmediatly. It is asynchronous
-          //We can use a callback to run the state after setState has finished
-          onChange={e =>
-            //Here we have the field value stored in our state
-            //This causes the component to re-render
-            this.setState({ searchField: e.target.value }, () =>
-              console.log(this.state.searchField)
-            )
-          }
+        <h1> Monsters Rolodex </h1>
+        <SearchBox
+          placeholder="search monster"
+          handleChange={this.handleChange}
         />
         {/*Any parameter that we pass through here is going to be to the props */}
         <CardList monsters={filteredMonsters} />
