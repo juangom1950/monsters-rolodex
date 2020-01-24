@@ -4,6 +4,8 @@ import { SearchBox } from "./components/search-box/search-box.component";
 import "./App.css";
 
 // With class components we have access to "state"
+//If I'm extending from some other class component I want to pull in all of their methods and all of their functionality.
+//It allows our class component to have access to this cycle components
 class App extends Component {
   constructor() {
     super();
